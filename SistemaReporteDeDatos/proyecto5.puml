@@ -1,0 +1,108 @@
+@startuml
+class SalesReport {
+- SalesDataReport salesDataReport
++ <<Create>> SalesReport(String)
++ void exportarReporte()
+}
+
+
+interface SalesReportBase {
+~ SalesReport generateSalesReport(DataSet)
+}
+
+class ReportToAccionistas {
++ void hRReportToPDF(HRReport)
++ void financialReportToExcel(FinancialReport)
++ void saleReportToExcel(SalesReport)
+}
+
+class FinancialReport {
+- FinancialDataReporter financialDataReporter
++ <<Create>> FinancialReport(String)
++ void exportarReporte()
+}
+
+
+class ReportToCorporativo {
++ void financialReportToExcel(FinancialReport)
++ void salesReportToExcel(SalesReport)
+}
+
+interface FinancialReportBase {
+~ FinancialReportBase generatedFinancialReport(DataSet)
+}
+
+interface GerentesDepartamento {
++ void hRReportToCSV(HRReport)
++ void hRRReportToExcel(HRReport)
+}
+
+class Main {
++ {static} void main(String[])
+}
+
+interface HRReportBase {
+~ HRReport generateHRReport(DataSet)
+}
+
+class ReportToGerentes {
++ void hRReportToCSV(HRReport)
++ void hRRReportToExcel(HRReport)
+}
+
+class HRReport {
+- HRDataReport hrDataReport
++ <<Create>> HRReport(String)
++ void exportarReporte()
+}
+
+
+class SalesDataReport {
++ SalesReport generateSalesReport(DataSet)
+}
+
+class FinancialDataReporter {
++ FinancialReportBase generatedFinancialReport(DataSet)
+}
+
+class DataSet {
+# int ID
++ <<Create>> DataSet(int)
++ int getID()
+}
+
+
+interface Accionistas {
++ void hRReportToPDF(HRReport)
++ void financialReportToExcel(FinancialReport)
++ void saleReportToExcel(SalesReport)
+}
+
+interface Corporativo {
++ void financialReportToExcel(FinancialReport)
++ void salesReportToExcel(SalesReport)
+}
+
+class HRDataReport {
++ HRReport generateHRReport(DataSet)
+}
+
+abstract class Report {
+# String nombre
++ <<Create>> Report(String)
++ String getNombre()
+}
+
+
+
+HRDataReport -- DataSet
+Report <|-- SalesReport
+Accionistas <|.. ReportToAccionistas
+Report <|-- FinancialReport
+Corporativo <|.. ReportToCorporativo
+GerentesDepartamento <|.. ReportToGerentes
+Report <|-- HRReport
+SalesReportBase <|.. SalesDataReport
+FinancialReportBase <|.. FinancialDataReporter
+HRReportBase <|.. HRDataReport
+@enduml

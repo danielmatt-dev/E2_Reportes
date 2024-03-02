@@ -1,0 +1,139 @@
+@startuml
+class SalesReport {
+- SalesDataReport salesDataReport
++ <<Create>> SalesReport(String)
++ void exportarReporte()
+}
+
+
+interface SalesReportBase {
+~ Report generateSalesReport(DataSet)
+}
+
+class ReportToAccionistas {
++ void hRReportToPDF(HRReport)
++ void financialReportToExcel(FinancialReport)
++ void saleReportToExcel(SalesReport)
+}
+
+class SalesDataSet {
+- ArrayList<String> transacciones
++ <<Create>> SalesDataSet(int,ArrayList<String>)
++ ArrayList<String> getTransacciones()
++ void setTransacciones(ArrayList<String>)
+}
+
+
+abstract class DataSet {
+# int ID
++ <<Create>> DataSet(int)
++ int getID()
+}
+
+
+class FinancialReport {
+- FinancialDataReporter financialDataReporter
++ <<Create>> FinancialReport(String)
++ void exportarReporte()
+}
+
+
+class ReportToCorporativo {
++ void financialReportToExcel(FinancialReport)
++ void salesReportToExcel(SalesReport)
+}
+
+interface FinancialReportBase {
+~ Report generatedFinancialReport(DataSet)
+}
+
+interface GerentesDepartamento {
++ void hRReportToCSV(HRReport)
++ void hRRReportToExcel(HRReport)
+}
+
+class Main {
++ {static} void main(String[])
+}
+
+interface HRReportBase {
+~ Report generateHRReport(DataSet)
+}
+
+class ReportToGerentes {
++ void hRReportToCSV(HRReport)
++ void hRRReportToExcel(HRReport)
+}
+
+class FinancialDataSet {
+- ArrayList<String> estadoCuenta
++ <<Create>> FinancialDataSet(int,ArrayList<String>)
++ ArrayList<String> getEstadoCuenta()
++ void setEstadoCuenta(ArrayList<String>)
+}
+
+
+class HRReport {
+- HRDataReport hrDataReport
++ <<Create>> HRReport(String)
++ void exportarReporte()
+}
+
+
+class SalesDataReport {
++ Report generateSalesReport(DataSet)
+}
+
+class FinancialDataReporter {
++ Report generatedFinancialReport(DataSet)
+}
+
+interface Accionistas {
++ void hRReportToPDF(HRReport)
++ void financialReportToExcel(FinancialReport)
++ void saleReportToExcel(SalesReport)
+}
+
+interface Corporativo {
++ void financialReportToExcel(FinancialReport)
++ void salesReportToExcel(SalesReport)
+}
+
+class HRDataReport {
++ Report generateHRReport(DataSet)
+}
+
+abstract class Report {
+# String nombre
++ <<Create>> Report(String)
++ String getNombre()
+}
+
+
+class HRDataSet {
+- ArrayList<String> empleados
++ <<Create>> HRDataSet(int,ArrayList<String>)
++ ArrayList<String> getEmpleados()
++ void setEmpleados(ArrayList<String>)
+}
+
+
+Main --> FinancialReport: creates
+Main --> HRReport: creates
+Main --> SalesReport : creates
+Main --> ReportToAccionistas : creates
+Main --> ReportToCorporativo : creates
+Main --> ReportToGerentes : creates
+Report <|-- SalesReport
+Accionistas <|.. ReportToAccionistas
+DataSet <|-- SalesDataSet
+Report <|-- FinancialReport
+Corporativo <|.. ReportToCorporativo
+GerentesDepartamento <|.. ReportToGerentes
+DataSet <|-- FinancialDataSet
+Report <|-- HRReport
+SalesReportBase <|.. SalesDataReport
+FinancialReportBase <|.. FinancialDataReporter
+HRReportBase <|.. HRDataReport
+DataSet <|-- HRDataSet
+@enduml
